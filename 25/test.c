@@ -5,7 +5,7 @@
  */
 void reverse(struct ListNode* first, struct ListNode* last)
 {
-       if (!first->next) {
+       if (first == last) {
                return;
        } else {
                 reverse(first->next, last);
@@ -22,9 +22,9 @@ void reverse(struct ListNode* first, struct ListNode* last)
  */
 struct ListNode* reverseKGroup(struct ListNode* head, int k)
 {
-        struct ListNode *first_in_k, *last_in_k, *last_1, *curr, *ret;
+        struct ListNode *first_in_k, *last_in_k, *last_1, *curr, *ret = head;
         struct ListNode **pre_first;
-        int i, j = 0;
+        int i, ret_flag = 0;
                 
         if (!head)
                 return NULL;
@@ -50,15 +50,13 @@ struct ListNode* reverseKGroup(struct ListNode* head, int k)
                         reverse(first_in_k, last_in_k);
                         first_in_k->next = last_1;
                         
-                        if (!j)
+                        if (!ret_flag) {
                                 ret = last_in_k;
-                        else
-                                j = 1;
+                                ret_flag = 1;
+                        }
                                 
-                        if (!last_1)
-                                break;
                         pre_first = &first_in_k->next;
-                        curr = first_in_k = first_in_k->next; 
+                        curr = first_in_k = last_1;
                 }
         } while (curr);
         
