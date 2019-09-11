@@ -1,10 +1,10 @@
-void swap(int *first, int *last)
+void swap(int *nums, int first, int last)
 {
         int k;
 
-        k = *first;
-        *first = *last;
-        *last = k;
+        k = *(nums + first);
+        *(nums + first) = *(nums + last);
+        *(nums + last) = k;
 }
 
 int removeElement(int* nums, int numsSize, int val)
@@ -21,17 +21,16 @@ int removeElement(int* nums, int numsSize, int val)
                 while (first != numsSize && *(nums + first) != val)
                         first++;
                        
-                while (last != -1 && *(nums + last) == val)
+                while (last != -1 && *(nums + last) == val) {
                         last--;
+                        num++;
+                }
                 
                 if (first < last) {
-                        swap(first, last);
+                        swap(nums, first, last);
                         first++;
-                        last++;
+                        last--;
                         num++;
                 }
                        
-        } while (first < last);
-        
-        return numsSize - num;
-}
+        } while (first <= last);
