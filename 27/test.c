@@ -3,7 +3,7 @@ void swap(int *nums, int first, int last)
         int k;
 
         k = *(nums + first);
-        *(nums + first) = *(nums + last);
+        *(nums + first) = *(nums + last); 
         *(nums + last) = k;
 }
 
@@ -34,3 +34,6 @@ int removeElement(int* nums, int numsSize, int val)
                 }
                        
         } while (first <= last);
+        
+        return numsSize - num;
+}
