@@ -29,11 +29,50 @@ void swap(int *a, int *b)
 void sort(int **intervals, int intervalsSize,
           int (*compare)(int *a, int *b), void (*swap)(int *a, int *b))
 {
+        int i, j;
+
+        for (i = 0; i < intervalsSize - 1; i++)
+                for (j = 0; j < intervalsSize - 1 - i; j++)
+                        if (compare(*(intervals + j), *(intervals + j + 1)) == 1)
+                                swap(*(intervals + j), *(intervals + j + 1));
+}
+
+bool can_merge(int *a, int *b)
+{
+       if (a[1] >= b[0])
+               return true;
+        else
+               return false;
+}
+
+void do_merge(int *a, int *b)
+{
+        a[1] = b[1];
+}
+
+void update_curr(int *curr, int *b)
+{
+        curr[0] = b[0];
+        curr[1] = b[1];
 }
 
 int **__merge(int **intervals, int intervalsSize, int *returnSize)
 {
-       return NULL; 
+       int merge_num = 0, i, curr = 0;
+
+       for (i =  0; i < intervalsSize - 1; i++) {
+              if (can_merge(*(intervals + i), *(intervals + i + 1))) {
+                        do_merge(*(intervals + i), *(intervals + i + 1));
+                        i++;
+                        update_curr(*(intervals + curr), *(intervals + i));
+                        curr++;
+                        merge_num++;
+              }
+       }
+
+       *returnSize = *returnSize - merge_num;
+
+       return intervals;
 }
 
 /**
