@@ -25,7 +25,7 @@ bool has_repeating_c(char *s, char *end)
 
 int lengthOfLongestSubstring(char *s)
 {
-        int s_length, max = 1, i, j;
+        int s_length, max = 1, i, j = 1;
 
         if (!s || !strlen(s))
                 return 0;
@@ -36,7 +36,7 @@ int lengthOfLongestSubstring(char *s)
                if (max >= s_length - i)
                        return max;
 
-               for (j = i + 1; j < s_length; j++) {
+               for (; j < s_length; j++) {
                        if (has_repeating_c(s + i, s + j))
                                break;
                        else if (j - i + 1 > max)
