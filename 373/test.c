@@ -5,7 +5,7 @@
  */
 int **kSmallestPairs(int *nums1, int nums1Size, int *nums2, int nums2Size, int k, int *returnSize, int *returnColumnSizes)
 {
-        int **ret, i, j, n, curr_1, curr_2;
+        int **ret, i, j, n = 0, curr_1, curr_2;
         
         ret = (int **)malloc(sizeof(int *) * k);  
         if (!ret)
@@ -27,8 +27,9 @@ int **kSmallestPairs(int *nums1, int nums1Size, int *nums2, int nums2Size, int k
         curr_1 = curr_2 = 0;
         **ret = *nums1;
         *(*ret + 1) = *nums2;              
+        n++;
         
-        for (n = 1; n <= k - 1; n++) {
+        while ((curr_1 < nums1Size) && (curr_2 < nums2Size)) {
                 if (*(nums1 + curr_1) + *(nums2 + curr_2 + 1) <
                     *(nums1 + curr_1 + 1) + *(nums2 + curr_2)) {
                         **(ret + n) = *(nums1 + curr_1);
@@ -39,9 +40,10 @@ int **kSmallestPairs(int *nums1, int nums1Size, int *nums2, int nums2Size, int k
                         *(*(ret + n) + 1) = *(nums2 + curr_2);              
                         curr_1++;
                 }             
+                n++;
         }
                 
-        *returnSize = k;
+        *returnSize = n;
         return ret;
         
 err_free_array:
