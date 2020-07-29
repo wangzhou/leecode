@@ -5,7 +5,7 @@
  *     struct ListNode *next;
  * };
  */
-void remove_node(struct ListNode* first, struct ListNode* second)
+void remove_node(struct ListNode *first, struct ListNode *second)
 {
         struct ListNode *tmp = first, *remove;
 
@@ -18,13 +18,13 @@ void remove_node(struct ListNode* first, struct ListNode* second)
 
 struct ListNode* deleteDuplicates(struct ListNode* head)
 {
-        struct ListNode* first, *second, *pre = NULL, *tmp_head, *tmp_pre;
+        struct ListNode* first, *second, *pre = NULL, *tmp_head, *tmp_pre, *tmp_next;
         int find_one_rang = 0;
 
         pre = tmp_pre = tmp_head = first = second = head;
 
         /* go through the list */
-        while (first) {
+        while (first && first->next) {
                 /* find duplicated range */                
                 while (second) {
                         if (first == second) {
@@ -35,10 +35,14 @@ struct ListNode* deleteDuplicates(struct ListNode* head)
 
                         if (tmp_pre->val == second->val) {
                                 tmp_pre = second;
-                                second = second->next;                                
                                 find_one_rang = 1;
+                                if (second->next)
+                                        second = second->next;                                
+                                else
+                                        break;
                         } else {
                                 if (!find_one_rang) {
+                                        pre = first;
                                         first = second;                                        
                                 } else {
                                         second = tmp_pre;
@@ -52,15 +56,15 @@ struct ListNode* deleteDuplicates(struct ListNode* head)
                 /* remove duplicated range and update pointers */                
                 if (find_one_rang) {
                         if (pre == first) {
-                                pre = tmp_head = second->next;
+                                pre = tmp_head = tmp_next = second->next;
                                 /* remove first -> second */                                
-                                remove_node(first, second);
-                                first = second = second->next;
+                                //remove_node(first, second);
+                                first = second = tmp_next;
                         } else {
-                                pre->next = second->next;
+                                pre->next = tmp_next = second->next;
                                 /* remove first -> second */                                
-                                remove_node(first, second);
-                                first = second = second->next;
+                                //remove_node(first, second);
+                                first = second = tmp_next;
                         }
 
                         find_one_rang = 0;
