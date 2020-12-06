@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
-#include <malloc.h>
 
 #define STACK_DEPTH 30000
 #define DAY_NUM 30000
@@ -44,13 +44,13 @@ int *dailyTemperatures(int *T, int TSize, int *returnSize)
         if (!T || TSize < 1 || TSize > DAY_NUM || !returnSize)
                 return NULL;
 
-        result = calloc(DAY_NUM, sizeof(int));
+        result = calloc(TSize, sizeof(int));
         if (!result)
                 return NULL;
 
-        for (i = 0; i < DAY_NUM; i++) {
+        for (i = 0; i < TSize; i++) {
                 if (is_empty(&st)) {
-                        push(&st, T[i]);
+                        push(&st, i);
                 } else {
                         while (!is_empty(&st) && (T[get_top_val(&st)] < T[i])) {
                                 result[get_top_val(&st)] = i - get_top_val(&st);
@@ -66,11 +66,23 @@ int *dailyTemperatures(int *T, int TSize, int *returnSize)
                 pop(&st);
         }
 
+        *returnSize = TSize;
         return result; 
 }
 
 int main()
 {
+    int T[8] = {73, 74, 75, 71, 69, 72, 76, 73};
+    int returnSize;
+    int *result;
+    int i;
+
+    result = dailyTemperatures(T, 8, &returnSize);
+
+    for (i = 0; i < 8; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
 
     return 0;
 }
