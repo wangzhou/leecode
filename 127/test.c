@@ -96,8 +96,8 @@ int ladderLength(char *beginWord, char *endWord, char **wordList, int wordListSi
 
         if (!beginWord || !endWord || !wordList || !wordListSize)
                 return 0;
-
-       once_arrive = calloc(wordListSize, sizeof(char *));
+	
+	once_arrive = calloc(wordListSize, sizeof(char *));
         if (!once_arrive)
                 return -1;
         array.a = once_arrive;

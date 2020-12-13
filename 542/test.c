@@ -1,4 +1,4 @@
-/* very simple, bugs fly */
+/* very stupid, bugs fly :) */
 #define Q_DEP 500
 
 #define IS_WALL -1
